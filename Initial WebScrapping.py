@@ -9,9 +9,18 @@
 # 
 # ### The link for the website: [www.goodreads.com](https://www.goodreads.com/list/tag/)
 # ### Objectives: 
-# Our project for BIA-660 Web Mining is going to focus on "Goodreads Books". We started this project to solve both a Business problem as well as to satisfy the user needs. This project focuses on the following:
-# *	Categorizing the books using the classification methods (Naive Bayes, Support vector machine (SVM) & KNN), when a new book is added to the database, our model predicts which category the book belongs to.
-# *	Recommending books to the user based on the user reviews (Category Based - Review Based).
+# Our project for BIA-660 Web Mining is going to focus on "Goodreads Books". 
+# Goodreads is the world’s largest site for readers and book recommendations. 
+# On Goodreads one can: 
+# 1) See what books their friends are reading, 
+# 2) Track the books you're reading, have read, and want to read.
+# 3) Check out your personalized book recommendations. 
+# 4) The Goodreads recommendation engine analyzes 20 billion data points to give suggestions tailored to your literary tastes.
+# 5) Find out if a book is a good fit for you from our community’s reviews. 
+# We started this project paying close attention to the functionalities of Goodreads illustrated above, to solve both a Business problem as well as to serve the customer needs and facilitate them with a enhanced user experience. 
+# This project focuses on the following:
+# > Categorization of the books using the varied classification methods (Naive Bayes, Support vector machine (SVM) & KNN), when a new book is added to the database, our model predicts which category the book belongs to.
+# >	Recommending books to the user based on the user reviews (Category Based - Review Based).
 # 
 # 
 
@@ -19,7 +28,7 @@
 # Initally, we are scraping the 29 tags (categories of the books) and their links to go inside each category and browse for the books which belong to that category.
 # * Using BeautifulSoup to scrape the data from the Goodreads website. 
 # * Using "Request" library to retrive the source code.
-# * Initializing a function called "getCategoryHref" to get the Cetegory links.
+# * Initializing a function called "getCategoryHref" to get the Category links.
 # * Writing the contents to the "categoryListGR.csv" File.
 # 
 # [categoryListGR.csv](https://github.com/MukunthR/recomendation-system/blob/master/categoryListGR.csv)
@@ -353,5 +362,132 @@ if __name__ == "__main__":
 
 
 # ## TF_IDF Matrix
+import nltk        
+import string
+import re
+import numpy as np
+import pandas as pd
+from nltk.stem import WordNetLemmatizer 
+from nltk.corpus import wordnet
+from nltk.corpus import stopwords
 
-# ## Graphs
+
+stop_words = stopwords.words('english')
+
+# import string
+wordnet_lemmatizer = WordNetLemmatizer()
+lemmaAdj = []
+lemmaVerb = []
+tagged_tokens = []
+token = []
+
+# wordnet and treebank have different tagging systems
+# define a mapping between wordnet tags and POS tags as a function
+def get_wordnet_pos(pos_tag):
+    # if pos tag starts with 'J'
+    if pos_tag.startswith('J'):
+        # return wordnet tag "ADJ"
+        return wordnet.ADJ
+
+    # if pos tag starts with 'V'
+    elif pos_tag.startswith('V'):
+        # return wordnet tag "VERB"
+        return wordnet.VERB
+
+    # if pos tag starts with 'N'
+    elif pos_tag.startswith('N'):
+        # return wordnet tag "NOUN"
+        return wordnet.NOUN
+
+    elif pos_tag.startswith('R'):
+        return wordnet.ADV
+    else:
+        # be default, return wordnet tag "NOUN"
+        return wordnet.NOUN
+    
+def tokenize(text):
+    
+    wordnet_lemmatizer = WordNetLemmatizer()
+    token_count = None
+#     for i in re.findall("([A-Z]+)", text):
+#         text = text.replace(i, i.lower())
+    
+    
+    text = re.findall(r'[a-z0-9][a-z0-9._@-]*[a-z0-9]', str(text))
+    stop_words = stopwords.words('english')
+    
+    tagged_tokens= nltk.pos_tag(text)
+    
+
+    lemmatized_words=[wordnet_lemmatizer.lemmatize\
+          (word, get_wordnet_pos(tag)) \
+          for (word, tag) in tagged_tokens \
+          # remove stop words
+              if word not in stop_words and \
+          # remove punctuations
+              word not in string.punctuation]
+    #print(lemmatized_words)
+    word_dist=nltk.FreqDist(lemmatized_words)
+    return word_dist
+    
+    
+    
+
+
+def get_tf_idf(text):
+    docs_tokens={idx:tokenize(doc) \
+             for idx,doc in enumerate(text)}
+    
+    
+    dtm=pd.DataFrame.from_dict(docs_tokens, orient="index" )
+    dtm=dtm.fillna(0)
+    #print(dtm)
+    
+    tf=dtm.values
+    doc_len=tf.sum(axis=1)
+    tf=np.divide(tf.T, doc_len).T
+    
+    df=np.where(tf>0,1,0)
+    
+    smoothed_idf=np.log(np.divide(len(text)+1, np.sum(df, axis=0)+1))+1    
+    smoothed_tf_idf=tf*smoothed_idf
+    
+    return smoothed_tf_idf, docs_tokens
+
+
+
+if __name__ == "__main__":
+    
+
+
+
+    data = pd.read_csv("entireBookList8700.csv", header=0)
+    tf_idf,freq_dist= get_tf_idf(data["Description"].values.tolist())
+    print("TF_IDF Matrix:\n",tf_idf)
+    print("\nFrequency distribution\n", freq_dist)
+    
+
+# PROJECT STAGES 
+### > STEP 1 : Scrapping the tags & Categories (29 Categories) 
+###            We
+### > STEP 2 : Scrapping the link ton access the categories 
+### > STEP 3 : Getting all the 300 records found & exporting them into a .csv file
+### > STEP 4 : Getting all the 300 records found & exporting them into a .csv file
+### > STEP 5 : Getting all the 300 records found & exporting them into a .csv file
+### > STEP 6 : Getting all the 300 records found & exporting them into a .csv file
+### > STEP 7 : Getting all the 300 records found & exporting them into a .csv file
+### > STEP 8 : Getting all the 300 records found & exporting them into a .csv file
+
+
+### This 
+
+
+# PROSPECTIVE STAGES. 
+
+
+
+
+
+
+
+
