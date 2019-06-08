@@ -5,8 +5,8 @@ Da Vinci designed to provide its users with very personalized and unique recomme
 
 * **Mukunth Rajendran** 
 (https://github.com/MukunthR)
-
-* ## Data Scraped From: [GoodReads](https://www.goodreads.com)
+* **Data Scraped from**
+[GoodReads](https://www.goodreads.com)
 
 ## Project Poster
 ![Image description](./davinci.JPG)
