@@ -9,7 +9,7 @@ Da Vinci designed to provide its users with very personalized and unique recomme
 [GoodReads](https://www.goodreads.com)
 
 ## Project Poster
-![Image description](./davinci.JPG)
+![Image description](./Da_vinci_poster.png)
 
 ## Overview
 
