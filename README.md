@@ -11,6 +11,19 @@ Da Vinci designed to provide its users with very personalized and unique recomme
 ## Project Poster
 ![Image description](./Da_vinci_poster.png)
 
-## Overview
+## Project Development Dependencies
+* **sklearn**
+* **nltk**
+* **scipy**
+* **numpy**
+* **pandas**
+* **seaborn**
+* **matplotlib**
+
+## Dependencies Installation
+`pip install sklearn nltk scipy numpy pandas seaborn marplotlib`
+
+
+
 
   
