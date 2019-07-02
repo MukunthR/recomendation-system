@@ -7,6 +7,8 @@ Da Vinci designed to provide its users with very personalized and unique recomme
 (https://github.com/MukunthR)
 * **Data Scraped from**
 [GoodReads](https://www.goodreads.com)
+* **YouTube**
+[Project Working](https://www.youtube.com/watch?v=922gBR8Vwg8)
 
 ## Project Poster
 ![Image description](./Da_vinci_poster.png)
@@ -24,6 +26,6 @@ Da Vinci designed to provide its users with very personalized and unique recomme
 `pip install sklearn nltk scipy numpy pandas seaborn marplotlib`
 
 
-[Project Working](https://www.youtube.com/watch?v=922gBR8Vwg8)
+
 
   
